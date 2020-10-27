@@ -1,0 +1,42 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars.yml'
+
+    - name: Instalación de vsftpd
+      apt: name=vsftpd update_cache=yes state=latest
+
+    - name: Creando usuario
+      user:
+        name: '{{ usuario }}'
+        password: '{{ password | password_hash("sha512") }}'
+        state: present
+        shell: /bin/bash
+        system: no
+        createhome: '{{ homeuser }}'
+
+    - file:
+        path: '{{ local_root }}/{{ usuario }}/ftp'
+        state: directory
+        owner: nobody
+        group: nogroup
+        mode: 0555
+        recurse: yes
+
+    - file:
+        path: '{{ local_root }}/{{ usuario }}/ftp/archivos'
+        state: directory
+        owner: '{{ usuario }}'
+        group: '{{ usuario }}'
+        mode: 0750
+        recurse: yes
+
+    - name: Añadiendo fichero de configuración
+      template: src=datos/vsftpd.conf.j2 dest=/etc/vsftpd.conf
+      notify:
+        - Reiniciar vsftpd
+
+  handlers:
+    - name: Reiniciar vsftpd
+      service: name=vsftpd state=restarted

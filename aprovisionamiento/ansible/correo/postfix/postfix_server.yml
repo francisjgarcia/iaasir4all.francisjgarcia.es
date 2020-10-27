@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars_server.yml'
+
+    - name: Instalación de Postfix
+      apt: name=postfix update_cache=yes state=latest
+
+    - name: Añadiendo fichero de configuración
+      template: src=datos/main_server.cf.j2 dest=/etc/postfix/main.cf
+      notify:
+        - Reiniciar Postfix
+
+  handlers:
+    - name: Reiniciar Postfix
+      service: name=postfix state=restarted

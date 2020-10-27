@@ -1,0 +1,55 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars.yml'
+
+    - name: Instalación de apache2 y PHP
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+          - apache2
+          - php5
+          - libapache2-mod-php5
+          - php5-mcrypt
+          - php5-mysql
+
+    - name: Configurando puesto de escucha
+      lineinfile: dest=/etc/apache2/ports.conf regexp="^Listen 80" line="Listen {{ puerto }}" state=present
+      notify:
+        - Reiniciar apache
+
+    - name: Cambiando puerto del virtualhost default
+      lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:80>" line="<VirtualHost *:{{ puerto }}>" state=present
+      notify:
+        - Reiniciar apache
+
+    - name: Deshabilitar 000-default
+      command: a2dissite 000-default.conf
+      notify:
+        - Reiniciar apache
+
+    - name: Crear nuevo VirtualHost
+      template: src=datos/virtualhost.conf.j2 dest=/etc/apache2/sites-available/{{ dominio }}.conf
+      notify:
+        - Reiniciar apache
+
+    - name: Habilitar {{ dominio }}
+      command: a2ensite {{ dominio }}.conf
+      notify:
+        - Reiniciar apache
+        
+    - file:
+        path: '{{ docroot }}/{{ dominio }}'
+        state: directory
+
+    - name: Aprovisionar index.php
+      template: src=datos/index.php dest={{ docroot }}/{{ dominio }}/index.php
+
+    - name: PHP ON
+      command: a2enmod php5
+      notify:
+        - Reiniciar apache
+
+  handlers:
+    - name: Reiniciar apache
+      service: name=apache2 state=restarted

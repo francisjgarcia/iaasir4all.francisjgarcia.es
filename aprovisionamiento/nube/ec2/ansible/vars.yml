@@ -1,0 +1,11 @@
+instance_type: t2.micro
+security_group: prueba
+image: ami-07a3bd4944eb120a0
+keypair: PASIR
+region: ap-southeast-2
+hostname: prueba
+aws_access_key: AKIAIAQVOLN2TTYALXIA
+aws_secret_key: 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
+puerto_externo: 80
+puerto_interno: 80
+count: 1

@@ -1,0 +1,21 @@
+version: '3'
+services:
+    postgresql:
+        container_name: PostgreSQL
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '5432:5432'
+        networks:
+            iaasir4all:
+                ipv4_address: 192.168.100.2
+
+networks:
+  iaasir4all:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.100.0/24
+

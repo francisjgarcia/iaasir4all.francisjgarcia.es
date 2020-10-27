@@ -1,0 +1,37 @@
+version: '3.6'
+services:
+  iaasir4all:
+    container_name: iaasir4all
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME}:apache-php7.2
+    depends_on:
+      - iaasir4all_database
+    ports:
+        - 8080:80
+    volumes:
+        - ../public_html:/var/www/html
+        - ../.env:/var/www/.env:ro
+    restart: always
+
+    iaasir4all_database:
+    container_name: iaasir4all_database
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=dbiaasir4all
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - TZ=${DB_TIMEZONE}
+    ports:
+      - "${DB_EXPOSE_PORT}:3306"
+    volumes:
+      - ../container_data/iaasir4all_database/mysql:/var/lib/mysql
+      - ../data/sql/dbiaasir4all.sql:/docker-entrypoint-initdb.d/dbiaasir4all.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqlshow", "dbiaasir4all", "--user=${DB_USER}", "--password=${DB_PASSWORD}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: always

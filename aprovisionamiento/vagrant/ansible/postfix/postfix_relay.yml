@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars_relay.yml'
+
+    - name: Instalación de Postfix
+      apt: name=postfix update_cache=yes state=latest
+
+    - name: Añadiendo fichero de configuración
+      template: src=datos/main_relay.cf.j2 dest=/etc/postfix/main.cf
+      notify:
+        - Reiniciar Postfix
+
+    - name: Añadiendo certificado de gmail
+      template: src=datos/cacert.pem dest=/etc/postfix/cacert.pem
+
+    - name: Añadiendo sasl password
+      template: src=datos/sasl_passwd.j2 dest=/etc/postfix/sasl_passwd
+
+    - name: Ejecutar postmap
+      command: postmap /etc/postfix/sasl_passwd
+      notify:
+        - Reiniciar Postfix
+
+  handlers:
+    - name: Reiniciar Postfix
+      service: name=postfix state=restarted

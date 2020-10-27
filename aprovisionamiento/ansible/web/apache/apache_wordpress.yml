@@ -1,0 +1,60 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars.yml'
+
+    - name: Instalación de apache2 y PHP
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+          - apache2
+          - php
+          - libapache2-mod-php
+          - php-mysql
+
+    - name: Configurando puesto de escucha
+      lineinfile: dest=/etc/apache2/ports.conf regexp="^Listen 80" line="Listen {{ puerto }}" state=present
+
+    - name: Cambiando puerto del virtualhost default
+      lineinfile: dest=/etc/apache2/sites-available/000-default.conf regexp="^<VirtualHost \*:80>" line="<VirtualHost *:{{ puerto }}>" state=present
+
+    - name: Deshabilitar 000-default
+      command: a2dissite 000-default.conf
+
+    - name: Crear nuevo VirtualHost
+      template: src=datos/virtualhost.conf.j2 dest=/etc/apache2/sites-available/{{ dominio }}.conf
+
+    - name: Habilitar {{ dominio }}
+      command: a2ensite {{ dominio }}.conf
+        
+    - file:
+        path: '{{ docroot }}/{{ dominio }}/public_html'
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: 0775
+        recurse: yes
+
+    - name: Descargar WordPress
+      get_url:
+        url: https://es.wordpress.org/latest-es_ES.tar.gz
+        dest: /tmp/wordpress.tar.gz
+
+    - name: Descomprimir WordPress
+      command: tar xzf /tmp/wordpress.tar.gz --strip-components=1 -C {{ docroot }}/{{ dominio }}/public_html
+
+    - file:
+        path: '{{ docroot }}/{{ dominio }}/public_html'
+        state: directory
+        owner: '{{ usuario }}'
+        group: www-data
+        mode: 0775
+        recurse: yes
+
+    - name: PHP ON
+      command: a2enmod php7.0
+
+    - name: Reiniciar apache
+      service:
+        name: apache2
+        state: restarted

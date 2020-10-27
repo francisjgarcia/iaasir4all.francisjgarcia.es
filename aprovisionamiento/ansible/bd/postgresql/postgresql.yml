@@ -1,0 +1,101 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars.yml'
+
+    - name: Instalación de PostgreSQL
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - postgresql
+        - postgresql-contrib
+        - libpq-dev
+        - python-psycopg2
+
+    - name: Crear base de datos
+      become_user: postgres
+      postgresql_db:
+        name='{{ database }}'
+        state=present
+
+    - name: Crear usuario
+      become_user: postgres
+      postgresql_user:
+        db='{{ database }}'
+        user='{{ user }}'
+        password='{{ user_password }}'
+        priv=ALL
+        state=present
+
+    - name: Copiar fichero base de datos a equipo remoto
+      copy:
+        src=datos/database.sql
+        dest=/tmp
+
+    - name: Importar base de datos
+      become_user: postgres
+      shell: psql {{ database }} < /tmp/database.sql
+
+    - name: Conceder permisos sobre las tablas
+      become_user: postgres
+      postgresql_privs:
+        database='{{ database }}'
+        schema=public
+        state=present
+        privs=ALL
+        type=table
+        roles='{{ user }}'
+        grant_option=no
+        objs=ALL_IN_SCHEMA
+
+    - name: Conceder permisos sobre las secuencias
+      become_user: postgres
+      postgresql_privs:
+        database='{{ database }}'
+        schema=public
+        state=present
+        privs=USAGE
+        type=sequence
+        roles='{{ user }}'
+        grant_option=no
+        objs=ALL_IN_SCHEMA
+
+    - name: Buscando fichero de configuración
+      command: bash -c "sudo -u postgres psql -U postgres -d postgres -t -c 'show config_file' | sed 's/ //g' "
+      ignore_errors: true
+      register: pg_main_conf
+
+    - name: Guardando ruta en variable
+      debug: var=pg_main_conf.stdout
+        
+    - name: Buscando fichero HBA
+      command: bash -c "sudo -u postgres psql -U postgres -d postgres -t -c 'show hba_file' | sed 's/ //g' "
+      ignore_errors: true
+      register: pg_hba_conf
+ 
+    - name: Guardando ruta en variable
+      debug: var=pg_hba_conf.stdout
+      
+    - name: Permitir accesos
+      copy:
+        dest: "{{ pg_hba_conf.stdout }}"
+        content: |
+          local   all   postgres   trust 
+          local   all   all        trust
+          host    all   all        {{ acceso }}   md5
+      notify:
+        - Reiniciar PostgreSQL
+        
+    - name: Permitir cualquier acceso
+      lineinfile: dest='{{ pg_main_conf.stdout }}' regexp="^#listen_addresses" line="listen_addresses = '{{ listen }}'" state=present
+      notify:
+        - Reiniciar PostgreSQL
+
+    - name: Cambiar puerto
+      lineinfile: dest='{{ pg_main_conf.stdout }}' regexp="^#port = 5432" line="port = '{{ puerto }}'" state=present
+      notify:
+        - Reiniciar PostgreSQL
+        
+  handlers:
+    - name: Reiniciar PostgreSQL
+      service: name=postgresql state=restarted

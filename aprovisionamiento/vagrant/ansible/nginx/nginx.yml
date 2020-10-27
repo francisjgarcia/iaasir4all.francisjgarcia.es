@@ -1,0 +1,39 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars.yml'
+
+    - name: Instalación de nginx y PHP
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+          - nginx
+          - php5-fpm
+          - php5-mysql
+
+    - file:
+        path: '/etc/nginx/sites-enabled/default'
+        state: absent
+
+    - name: Configurar sitio
+      template: src=datos/nginx.conf.j2 dest=/etc/nginx/sites-available/{{ dominio }}
+      notify: Reiniciar nginx
+
+
+    - file:
+        src: '/etc/nginx/sites-available/{{ dominio }}'
+        dest: /etc/nginx/sites-enabled/{{ dominio }}
+        state: link
+        force: yes
+            
+    - file:
+        path: '{{ docroot }}/{{ dominio }}'
+        state: directory
+
+    - name: Añadiendo index
+      template: src=datos/index.php dest={{ docroot }}/{{ dominio }}/index.php
+      notify: Reiniciar nginx
+
+  handlers:
+    - name: Reiniciar nginx
+      service: name=nginx state=restarted

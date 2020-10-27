@@ -1,0 +1,56 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - include_vars: 'vars.yml'
+
+    - name: Instalación de MySQL
+      apt: name={{ item }} update_cache=yes state=latest
+      with_items:
+        - mysql-server
+        - python-mysqldb 
+
+    - name: Modificar mysqld.cnf
+      template: src=datos/mysqld.cnf.j2 dest=/etc/mysql/mysql.conf.d/mysqld.cnf owner=root mode=0600
+      notify:
+        - Reiniciar MySQL
+        
+    - name: Crear nuevo usuario MySQL
+      mysql_user:
+        name='{{ user }}'
+        password='{{ user_password }}'
+        host='{{ host }}'
+        priv='{{ database }}.*:ALL'
+        state=present
+
+    - name: Crear base de datos
+      mysql_db:
+        name={{ database }}
+        state=present
+        
+    - name: Copiar fichero base de datos a equipo remoto
+      copy:
+        src=datos/database.sql
+        dest=/tmp
+        
+    - name: Importar base de datos
+      mysql_db:
+        state=import
+        name={{ database }}
+        target=/tmp/database.sql
+      ignore_errors: true
+    
+    - name: Eliminar fichero de base de datos
+      file:
+        path: /tmp/database.sql
+        state: absent
+        
+    - name: Cambiar contraseña de root
+      mysql_user: 
+        name=root 
+        host=localhost
+        password={{ root_password }}
+
+  handlers:
+    - name: Reiniciar MySQL
+      service: name=mysql state=restarted

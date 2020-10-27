@@ -1,0 +1,21 @@
+version: '3'
+services:
+    mariadb:
+        container_name: MariaDB
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '3306:3306'
+        networks:
+            iaasir4all:
+                ipv4_address: 192.168.100.2
+
+networks:
+  iaasir4all:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.100.0/24
+

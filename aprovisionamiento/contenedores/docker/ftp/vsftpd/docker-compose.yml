@@ -1,0 +1,23 @@
+version: '3'
+services:
+    vsftpd:
+        container_name: FTP
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '20-21:20-21'
+            - '10090-10100:10090-10100'
+        volumes:
+            - './ficheros:/home/vsftpd:rw'
+        networks:
+            iaasir4all:
+                ipv4_address: 192.168.100.2
+
+networks:
+  iaasir4all:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.100.0/24
