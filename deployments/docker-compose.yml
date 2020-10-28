@@ -9,13 +9,13 @@ services:
     depends_on:
       - iaasir4all_database
     ports:
-        - 8080:80
+        - ${WEB_EXPOSE_PORT}:80
     volumes:
         - ../public_html:/var/www/html
         - ../.env:/var/www/.env:ro
     restart: always
 
-    iaasir4all_database:
+  iaasir4all_database:
     container_name: iaasir4all_database
     image: mysql:5.7
     environment:
@@ -25,7 +25,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
       - TZ=${DB_TIMEZONE}
     ports:
-      - "${DB_EXPOSE_PORT}:3306"
+      - ${DB_EXPOSE_PORT}:3306
     volumes:
       - ../container_data/iaasir4all_database/mysql:/var/lib/mysql
       - ../data/sql/dbiaasir4all.sql:/docker-entrypoint-initdb.d/dbiaasir4all.sql:ro
