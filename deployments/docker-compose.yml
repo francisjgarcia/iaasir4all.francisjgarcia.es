@@ -27,8 +27,8 @@ services:
     ports:
       - ${DB_EXPOSE_PORT}:3306
     volumes:
-      - ../container_data/iaasir4all_database/mysql:/var/lib/mysql
-      - ../data/sql/dbiaasir4all.sql:/docker-entrypoint-initdb.d/dbiaasir4all.sql:ro
+      - ../data/iaasir4all_database/mysql:/var/lib/mysql
+      - ../config/sql/dbiaasir4all.sql:/docker-entrypoint-initdb.d/dbiaasir4all.sql:ro
     healthcheck:
       test: ["CMD", "mysqlshow", "dbiaasir4all", "--user=${DB_USER}", "--password=${DB_PASSWORD}"]
       interval: 30s
