@@ -72,6 +72,5 @@ $(document).on('ready', function() {
   });
 });
 </script>
-<script src="/js/aviso.js"></script>
 </body>
 </html>

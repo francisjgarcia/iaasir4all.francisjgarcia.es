@@ -15,7 +15,3 @@
 <span class="top"><div class="container"><img src="/images/up-arrow.png" alt=""></div></span>
 
 <div id="wrapper">
-
-<div class="aviso_version">
-Hay una nueva web que mejora a esta haciendo uso de microservicios con docker. Si quieres visitarla, <a style="color: #fbfbfb;" href="https://microntainers.francisjgarcia.es"><b>pulsa aquí</b></a>.
-</div>

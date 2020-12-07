@@ -276,7 +276,7 @@
 	<div class="container">
 		<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 			<h1 class="display-5">Sobre mí</h1>
-			<p class="lead">Buenas, soy <a href="http://francisjgarcia.ml" target="_blank">Francis</a>, estudiante de Administración de Sistemas Informáticos en Red (ASIR).</p>
+			<p class="lead">Buenas, soy <a href="https://francisjgarcia.es" target="_blank">Francis</a>, estudiante de Administración de Sistemas Informáticos en Red (ASIR).</p>
 			<p class="lead">Esta web forma parte del proyecto integrado de final de ciclo superior (PASIR).</p>
 			<p class="lead">Estas son las herramientas o servicios que se han utilizado durante el proyecto para el funcionamiento de esta web y la infraestructura que hay tras ella.</p>
 		</div>
