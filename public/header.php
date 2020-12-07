@@ -15,4 +15,3 @@
 <span class="top"><div class="container"><img src="/images/up-arrow.png" alt=""></div></span>
 
 <div id="wrapper">
-
