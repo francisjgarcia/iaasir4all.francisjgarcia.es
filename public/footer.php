@@ -20,7 +20,7 @@
       </li>
     </ul>
     <div class="copyright">
-        Diseñado por <a href="http://francisjgarcia.es" target="_blank">Francis J. García</a> © <?php echo date("Y"); ?>
+        Diseñado por <a href="https://francisjgarcia.es" target="_blank">Francis J. García</a> © <?php echo date("Y"); ?>
     </div>
   </div>
 </footer>

@@ -15,3 +15,7 @@
 <span class="top"><div class="container"><img src="/images/up-arrow.png" alt=""></div></span>
 
 <div id="wrapper">
+
+<div class="aviso_version">
+Esta es una versión no funcional de <b>IaaSIR4ALL</b>. Todas las funciones están deshabilitadas.
+</div>

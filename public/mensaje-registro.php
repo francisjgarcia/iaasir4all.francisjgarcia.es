@@ -37,7 +37,7 @@
                         <div class="form-group row text-center">
                             <div class="offset-sm-12 col-sm-12">
                                 <br>
-                                <button type="submit" class="btn btn-primary">Entrar</button>
+                                <div class="btn btn-primary" style="cursor: pointer">Entrar</div>
                             </div>
                         </div>
                     </form>

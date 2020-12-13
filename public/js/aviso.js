@@ -1,8 +1,6 @@
-var titulo = "NUEVA VERSIÓN";
-var descripcion = "Hay una nueva web que mejora a esta haciendo uso de microservicios con docker. Si quieres visitarla, pulsa en el botón de 'Ir a la web'.";
+var titulo = "Aviso";
+var descripcion = "Esta es una versión no funcional de <b>IaaSIR4ALL</b>. <br> Todas las funciones están deshabilitadas.";
 var boton_cerrar = 'CERRAR';
-var boton_url = 'IR A LA WEB';
-var url = 'https://microntainers.francisjgarcia.es';
 
 function pureFadeIn(elem, display){
   var el = document.getElementById(elem);
@@ -55,7 +53,7 @@ function eraseCookie(name) {
 
 function cookieConsent() {
   if (!getCookie('purecookieDismiss')) {
-    document.body.innerHTML += '<div class="cookieConsent" id="cookieConsent"><div class="cookieConsentContainer" id="cookieConsentContainer"><div class="cookieConsentContainerBox" id="cookieConsentContainerBox"><div class="cookieTitle"><a>' + titulo + '</a></div><div class="cookieDesc"><p>' + descripcion + ' </p></div><div class="cookieButton"><a class="btn_cerrar" onClick="purecookieDismiss();">' + boton_cerrar + '</a><a class="btn_url" href="' + url + '">' + boton_url + '</a></div></div></div></div>';
+    document.body.innerHTML += '<div class="cookieConsent" id="cookieConsent"><div class="cookieConsentContainer" id="cookieConsentContainer"><div class="cookieConsentContainerBox" id="cookieConsentContainerBox"><div class="cookieTitle"><a>' + titulo + '</a></div><div class="cookieDesc"><p>' + descripcion + ' </p></div><div class="cookieButton"><a class="btn_cerrar" onClick="purecookieDismiss();">' + boton_cerrar + '</a></div></div></div></div>';
 	pureFadeIn("cookieConsent");
   }
 }
