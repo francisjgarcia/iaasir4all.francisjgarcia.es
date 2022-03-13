@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	<title>Portal de autoservicios</title>
+	<link rel="icon" sizes="256x256" href="images/favicon.ico">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/style.min.css">
+</head>
+<body id="body">
+	
+	<span class="top"><div class="container"><img src="images/up-arrow.png" alt=""></div></span>
+	
+	<div id="wrapper">
+		
+		<div class="aviso_version">
+			Esta es una versión no funcional de <b>IaaSIR4ALL</b>. Todas las funciones están deshabilitadas.
+		</div>
+		
+		<span id="inicio"></span>
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top fjg-nav">
+			
+			<div class="container fjg-nav-flex">
+				
+				<a class="navbar-brand" href="/">
+					<img src="images/logo.png" alt="IaaSIR4ALL">
+				</a>
+				
+				<button class="navbar-toggler fjg-nav-menu-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="cta">
+						<div class="toggle-btn type10"></div>
+					</div>
+				</button>
+				
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="#inicio">Inicio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#herramientas">Herramientas</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#servicios">Servicios</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#sobre-mi">Sobre mí</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#contacto">Contacto</a>
+						</li>
+						<li class="nav-item fjg-login-btn">
+							<button type="button" class="btn btn-sm btn-primary btn-login" data-toggle="modal" data-target="#login"><span class="glyphicon glyphicon-log-in"></span> Entrar</button>
+						</li>
+						<li class="nav-item fjg-login-btn">
+							<button type="button" class="btn btn-sm btn-secondary btn-registro" data-toggle="modal" data-target="#registro"><span class="glyphicon glyphicon-log-in"></span> Registro</button>
+						</li>
+					</ul>
+					
+				</div>
+			</nav>
+			
+			<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="container">
+								<form action="/server/login.php" method="POST">
+									<div class="form-group row">
+										<label for="inputEmail3" class="col-sm-3 col-form-label">Usuario</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="inputPassword3" class="col-sm-3 col-form-label">Contraseña</label>
+										<div class="col-sm-9">
+											<input type="password" class="form-control" id="clave" name="clave" placeholder="Contraseña">
+										</div>
+									</div>
+									<div class="form-group row text-center">
+										<div class="offset-sm-12 col-sm-12">
+											<br>
+											<div class="btn btn-primary" style="cursor: pointer">Entrar</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="registro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Registro</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="container">
+								<form action="#" method="POST">
+									<div class="form-group row">
+										<label for="inputEmail3" class="col-sm-3 col-form-label">Nombre</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Usuario">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="inputEmail3" class="col-sm-3 col-form-label">Usuario</label>
+										<div class="col-sm-9">
+											<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="inputPassword3" class="col-sm-3 col-form-label">Contraseña</label>
+										<div class="col-sm-9">
+											<input type="password" class="form-control" id="clave" name="clave" placeholder="Contraseña">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label for="inputPassword3" class="col-sm-3 col-form-label">Repetir contraseña</label>
+										<div class="col-sm-9">
+											<input type="password" class="form-control" id="clave2" name="clave2" placeholder="Contraseña">
+										</div>
+									</div>
+									<div class="form-group row text-center">
+										<div class="offset-sm-12 col-sm-12">
+											<br>
+											<div class="btn btn-primary" style="cursor: pointer">Entrar</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLongTitle">Cerrar sesión</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							¿Estás seguro de que deseas cerrar sesión?
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+							<a href="#"><button onclicktype="button" class="btn btn-danger">Cerrar sesión</button></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<main>
+				<div class="container" style="padding: 5em auto;">
+					
+					<div class="row" style="display: flex;align-items: center;justify-content: center;width: 100%; height: 100%;">
+						<div class="col-7">
+							<div class="birds">
+								<div class="birds__hatdove">
+									<div class="birds__hatdove-shadow"></div>
+									<div class="birds__hatdove-head">
+										<div class="birds__hatdove-hat"></div>
+										<div class="birds__hatdove-forehead"></div>
+										<div class="birds__hatdove-eye"></div>
+										<div class="birds__hatdove-eye"></div>
+										<div class="birds__hatdove-beak"></div>
+									</div>
+									<div class="birds__hatdove-backwing"></div>
+									<div class="birds__circles-1"></div>
+									<div class="birds__hatdove-backleg">
+										<div class="birds__curly"></div>
+									</div>
+									<div class="birds__hatdove-body"></div>
+									<div class="birds__hatdove-frontleg">
+										<div class="birds__curly"></div>
+									</div>
+									<div class="birds__hatdove-frontwing"></div>
+									<div class="birds__circles-2"></div>
+									<div class="birds__hatdove-frontwing-finger"></div>
+									<div class="birds__hatdove-frontwing-finger"></div>
+									<div class="birds__hatdove-frontwing-finger"></div>
+								</div>
+								<div class="birds__table">
+									<div class="birds__table-shadow"></div>
+								</div>
+								<div class="birds__laptop"></div>
+								<div class="birds__laptop">
+									<div class="birds__monitor">
+										<div class="birds__code"><div class="birds__code__text"></div></div>
+									</div>
+								</div>
+								<div class="birds__coffee">
+									<img src="images/ansible.png" alt="Ansible">
+								</div>
+								<div class="birds__feather"></div>
+								<div class="birds__feather"></div>
+								<div class="birds__rundove-shadow"></div>
+								<div class="birds__rundove">
+									<div class="birds__rundove-backwing">
+										<div class="birds__finger"></div>
+										<div class="birds__finger"></div>
+										<div class="birds__finger"></div>
+										<div class="birds__circles"></div>
+									</div>
+									<div class="birds__rundove-head">
+										<div class="birds__rundove-eye"></div>
+										<div class="birds__rundove-eye"></div>
+										<div class="birds__rundove-beak"></div>
+									</div>
+									<div class="birds__rundove-backleg">
+										<div class="birds__curly"></div>
+									</div>
+									<div class="birds__rundove-body"></div>
+									<div class="birds__rundove-frontleg">
+										<div class="birds__curly"></div>
+									</div>
+									<div class="birds__rundove-frontwing">
+										<div class="birds__finger"></div>
+										<div class="birds__finger"></div>
+										<div class="birds__finger"></div>
+										<div class="birds__circles"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-5">
+							<div class="text-center">
+								<h1 style="padding-bottom: 60px; text-shadow: 2px 2px 8px #000; color: #fbfbfb !important; position: relative">Despliega insfraestructuras y microservicios 
+									<div class="typewrite" data-period="2000" data-type='[ "de forma sencilla.", "de forma rápida.", "a golpe de ratón." ]'>
+									</div>
+									<button style="padding: 10px 15px; font-size: 18px; z-index: 100;position: absolute; margin-top: 12px; margin-left: -53px" type="button" class="btn btn-sm btn-danger btn-registro" data-toggle="modal" data-target="#registro"><span class="glyphicon glyphicon-log-in"></span> Regístrate</button>
+								</h1>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</main>
+			
+			<div class="seccion primeraseccion">
+				<div class="container">
+					<div class="row text-center">
+						<div class="col-lg-4">
+							
+							<div class="rounded-circle">
+								<img src="images/computer.png" alt="infraestructura">
+							</div>
+							<h3>Crea infraestructuras</h3>
+							<p>Crea toda una infraestructura de manera virtual.</p>
+						</div><!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<div class="rounded-circle">
+								<img src="images/service.png" alt="Servicios">
+							</div>
+							<h3>Despliega servicios</h3>
+							<p>Despliega todos los servicios que necesites.</p>
+						</div><!-- /.col-lg-4 -->
+						<div class="col-lg-4">
+							<div class="rounded-circle">
+								<img src="/images/time.png" alt="Tiempo">
+							</div>
+							<h3>Ahorra tiempo</h3>
+							<p>Y todo esto, con un par de clics.</p>
+						</div><!-- /.col-lg-4 -->
+					</div>
+				</div>
+			</div>
+			
+			<div id="herramientas" class="seccion">
+				<div id="what-we-do" class="container">
+					<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+						<h1 class="display-5">Herramientas</h1>
+						<p class="lead">Para orquestar, desplegar y crear los diferentes servicios e infraestructuras utilizamos una amplia variedad de herramientas DevOps, utlizando SSH en todas ellas.</p>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-block block-1">
+										<img src="images/ansible.png" alt="Ansible">
+										<h4 class="card-title">Ansible</h4>
+										<p class="card-text">Aprovisiona con software los distintos servidores.</p>
+										<a href="https://es.wikipedia.org/wiki/Ansible_(software)" target="_blank" title="Leer más">Leer más</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-block block-2">
+										<img src="images/docker.png" alt="Docker">
+										<h4 class="card-title">Docker</h4>
+										<p class="card-text">Crea contenedores para desplegar microservicios.</p>
+										<a href="https://es.wikipedia.org/wiki/Docker_(software)" target="_blank" title="Leer más" class="read-more">Leer más</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-block block-3">
+										<img src="images/vagrant.png" alt="Vagrant">
+										<h4 class="card-title">Vagrant</h4>
+										<p class="card-text">Crea y configura entornos de desarrollo virtualizados.</p>
+										<a href="https://es.wikipedia.org/wiki/Vagrant_(software)" target="_blank" title="Leer más" class="read-more">Leer más</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-block block-6">
+										<img src="images/terraform.png" alt="Terraform">
+										<h4 class="card-title">Terraform</h4>
+										<p class="card-text">Permite definir y configurar la infraestructura como código.</p>
+										<a href="https://es.wikipedia.org/wiki/Terraform_(software)" target="_blank" title="Leer más" class="read-more">Leer más</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-block block-4">
+										<img src="images/ec2.png" alt="EC2">
+										<h4 class="card-title">AWS EC2</h4>
+										<p class="card-text">Crea una infraestructura como servicio en la nube de Amazon.</p>
+										<a href="https://es.wikipedia.org/wiki/Amazon_EC2" target="_blank" title="Leer más" class="read-more">Leer más</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-block block-5">
+										<img src="images/openstack.png" alt="OpenStack">
+										<h4 class="card-title">OpenStack</h4>
+										<p class="card-text">Crea una instancia en una nube privada de OpenStack.</p>
+										<a href="https://es.wikipedia.org/wiki/OpenStack" target="_blank" title="Leer más" class="read-more">Leer más</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="servicios" class="seccion">
+				<div class="container">
+					<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+						<h1 class="display-5">Servicios</h1>
+						<p class="lead">Disponemos de una amplia variedad de servicios que pueden ser orquestados desde nuestro panel de administración.</p>
+						<p class="lead">Una vez estén desplegados, podrás acceder a ellos desde el propio panel web.</p>
+					</div>
+					
+					<div class="row">
+						
+						<div class="col-md-4">
+							
+							<div class="box-part text-center">
+								
+								<img src="images/apache.png" alt="Apache">
+								
+								<div class="title">
+									<h3>Apache</h3>
+								</div>
+								
+								<div class="text">
+									<span>Desarrollado y mantenido por una comunidad de usuarios bajo la supervisión de la Apache Software Foundation.</span>
+								</div>
+								
+								<a href="#">Desplegar servicio</a>
+								<hr>
+								<p>Servidor web</p>
+							</div>
+						</div>   
+						
+						<div class="col-md-4">
+							
+							<div class="box-part text-center">
+								
+								<img src="images/nginx.png" alt="Nginx">
+								
+								<div class="title">
+									<h3>Nginx</h3>
+								</div>
+								
+								<div class="text">
+									<span>Es un servidor web/proxy inverso ligero de alto rendimiento y un proxy para protocolos de correo electrónico.</span>
+								</div>
+								
+								<a href="#">Desplegar servicio</a>
+								<hr>
+								<p>Servidor web</p>
+								
+							</div>
+						</div>   
+						
+						<div class="col-md-4">
+							
+							<div class="box-part text-center">
+								
+								<img src="images/vsftpd.png" alt="vsftpd">
+								
+								<div class="title">
+									<h3>Vsftpd</h3>
+								</div>
+								
+								<div class="text">
+									<span>Está licenciado bajo la licencia GPL y soporta IPv6 y SSL. Además, soporta FTP explicito y implícito.</span>
+								</div>
+								
+								<a href="#">Desplegar servicio</a>
+								<hr>
+								<p>Servidor FTP</p>
+								
+							</div>
+						</div>   
+						
+						<div class="col-md-4">
+							
+							<div class="box-part text-center">
+								
+								<img src="images/mysql.png" alt="MySQL">
+								
+								<div class="title">
+									<h3>MySQL</h3>
+								</div>
+								
+								<div class="text">
+									<span>SGBD relacional considerado como la base datos de código abierto más popular, sobre todo para entornos de desarrollo web.</span>
+								</div>
+								
+								<a href="#">Desplegar servicio</a>
+								<hr>
+								<p>Base de datos</p>
+								
+							</div>
+						</div>   
+						
+						<div class="col-md-4">
+							
+							<div class="box-part text-center">
+								
+								<img src="images/postgresql.png" alt="PostgreSQL">
+								
+								<div class="title">
+									<h3>PostgreSQL</h3>
+								</div>
+								
+								<div class="text">
+									<span>SGBD relacional orientado a objetos y de código abierto dirigido por una comunidad de desarrolladores PGDG.</span>
+								</div>
+								
+								<a href="#">Desplegar servicio</a>
+								<hr>
+								<p>Base de datos</p>
+								
+							</div>
+						</div>   
+						
+						<div class="col-md-4">
+							
+							<div class="box-part text-center">
+								
+								<img src="images/postfix.png" alt="Postfix">
+								
+								<div class="title">
+									<h3>Postfix</h3>
+								</div>
+								
+								<div class="text">
+									<span>Servidor de correo rápido para enrutar y enviar emails siendo fácil de administrar y segura utilizado Sendmail.</span>
+								</div>
+								
+								<a href="#">Desplegar servicio</a>
+								<hr>
+								<p>Servidor de correos</p>
+								
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<div id="sobre-mi"class="seccion">
+				<div class="container">
+					<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+						<h1 class="display-5">Sobre mí</h1>
+						<p class="lead">Buenas, soy <a href="https://www.francisjgarcia.es" target="_blank">Francis</a>, estudiante de Administración de Sistemas Informáticos en Red (ASIR).</p>
+						<p class="lead">Esta web forma parte del proyecto integrado de final de ciclo superior (PASIR).</p>
+						<p class="lead">Estas son las herramientas o servicios que se han utilizado durante el proyecto para el funcionamiento de esta web y la infraestructura que hay tras ella.</p>
+					</div>
+					<div class="col-md-12">
+						<div class="card row">
+							<div class="container">
+								<dl class="row" style="padding: 25px 10px 0">
+									
+									<dt class="col-sm-3">Diseño web</dt>
+									<dd class="col-sm-9">HTML5, CSS3, Bootstrap.</dd>
+									
+									<dt class="col-sm-3">Programación</dt>
+									<dd class="col-sm-9">PHP, JavaScript, Bash scripts.</dd>
+									
+									<dt class="col-sm-3">DevOps</dt>
+									<dd class="col-sm-9">Ansible, Docker, Vagrant, Terraform.</dd>
+									
+									<dt class="col-sm-3">Servicios</dt>
+									<dd class="col-sm-9">Apache, Nginx, Vsftpd, MySQL, PostgreSQL, Postfix, HaProxy, Bind9.</dd>
+									
+									<dt class="col-sm-3">Compartición de recursos</dt>
+									<dd class="col-sm-9">NFS, Samba.</dd>
+									
+									<dt class="col-sm-3">Redes</dt>
+									<dd class="col-sm-9">OpenSSH, OpenVPN.</dd>
+									
+									<dt class="col-sm-3">Virtualización</dt>
+									<dd class="col-sm-9">AWS, VMware Workstation, Hyper-V, OpenStack</dd>
+									
+									<dt class="col-sm-3">Monitorización</dt>
+									<dd class="col-sm-9">Zabbix.</dd>
+									
+									<dt class="col-sm-3">Logalizador</dt>
+									<dd class="col-sm-9">ELK (Elasticsearch, Logstach, Kibana).</dd>
+									
+									<dt class="col-sm-3">Ticketing</dt>
+									<dd class="col-sm-9">Zammad.</dd>
+									
+									<dt class="col-sm-3">Automatización de servicios</dt>
+									<dd class="col-sm-9">Rundeck.</dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div id="contacto" class="seccion">
+				<div class="container">
+					<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+						<h1 class="display-5">Contacto</h1>
+					</div>
+					
+					<form id="c_form" name="contact" method="POST">
+						
+						<label>
+							<p>Nombre</p>
+							<input name="nombre" id="c_name" type="text" class="c_input">
+						</label>
+						<label>
+							<p>Correo electrónico</p>
+							<input name="email" id="c_email" type="text" class="c_input">
+						</label>
+						<label>
+							<p>Asunto</p>
+							<input name="asunto" id="c_subject" type="text" class="c_input">
+						</label>
+						<label>
+							<p>Mensaje</p>
+							<textarea name="mensaje" id="c_msg" class="c_input"></textarea>
+						</label>
+						<div class="c_btns">
+							<input name="send" onclick="cargaSendMail()" type="button" value="Enviar" id="c_send">
+						</div>
+						
+					</form>
+				</div>
+			</div>
+			
+		</div>
+		
+		<footer>
+			<div class="content">
+				<ul class="rrss">
+					<li>
+						<a href="https://www.francisjgarcia.es" target="_blank">
+							<img src="images/fjg.png" alt="FJG" title="FJG">
+						</a>
+					</li>
+					<li>
+						<a href="https://github.com/francisjgarcia/" target="_blank">
+							<img src="images/github.png" alt="GitHub" title="GitHub">
+						</a>
+					</li>
+					<li>
+						<a href="https://www.linkedin.com/in/francisjgarcia/" target="_blank">
+							<img src="images/linkedin.png" alt="Linkedin" title="Linkedin">
+						</a>
+					</li>
+				</ul>
+				<div class="copyright">
+					Diseñado por <a href="https://www.francisjgarcia.es" target="_blank">Francis J. García</a>
+				</div>
+			</div>
+		</footer>
+		<div class="aviso_version_block">
+			Esta es una versión no funcional de <b>IaaSIR4ALL</b>. Todas las funciones están deshabilitadas.
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/tether.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/grid.js"></script>
+		<script src="js/form.js"></script>
+		<script src="js/smoothscroll.js"></script>
+		<script src="js/main-text.js"></script>
+		<script src="js/top.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(document).on('click', '.fjg-nav-menu-button', function () {
+					$(this).toggleClass('active')
+				})
+			});
+		</script>
+		<script type="text/javascript">
+			$(document).on('ready', function() {
+				$('.autoplay').slick({
+					slidesToShow: 5,
+					slidesToScroll: 1,
+					autoplay: true,
+					autoplaySpeed: 2500,
+					responsive: [
+					{
+						breakpoint: 1024,
+						settings: {
+							slidesToShow: 4,
+						}
+					},
+					{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: 3,
+							slidesToScroll: 1
+						}
+					},
+					{
+						breakpoint: 480,
+						settings: {
+							slidesToShow: 2,
+							slidesToScroll: 1
+						}
+					}
+					]
+				});
+			});
+		</script>
+	</body>
+	</html>
